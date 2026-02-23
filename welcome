@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Fazenda Indiana - App Gestão</title>
+    
+    <!-- Scripts de Estilo e Fontes -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#bd600f",
+                        "background-light": "#fcf9f7",
+                        "background-dark": "#1a1410",
+                    },
+                    fontFamily: { "display": ["Noto Serif", "serif"] },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem"}
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Noto Serif', serif; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        input:focus { border-color: #bd600f !important; ring: 0 !important; }
+        .active-nav { color: #bd600f !important; font-weight: 800; }
+    </style>
+</head>
+
+<body class="bg-background-light text-slate-900 min-h-screen flex flex-col">
+
+    <!-- HEADER (Topo) -->
+    <header class="h-16 bg-white border-b border-primary/10 flex items-center justify-between px-4 sticky top-0 z-50 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="bg-primary text-white size-9 rounded-lg flex items-center justify-center font-bold shadow-md shadow-primary/20">GT</div>
+            <h1 class="text-lg font-bold tracking-tight text-slate-800">Fazenda Indiana</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <button class="p-2 text-slate-500 rounded-full hover:bg-slate-100 transition-colors">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL (Scrollable) -->
+    <main class="flex-1 overflow-y-auto no-scrollbar pb-24">
+        
+        <!-- Dashboard Rápido -->
+        <div class="p-4 grid grid-cols-2 gap-3">
+            <div class="bg-white p-4 rounded-xl border border-primary/5 shadow-sm">
+                <p class="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Rebanho Total</p>
+                <h3 class="text-2xl font-black text-slate-800">1.240</h3>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-primary/5 shadow-sm">
+                <p class="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Meta Vendas</p>
+                <h3 class="text-2xl font-black text-primary">85%</h3>
+            </div>
+        </div>
+
+        <!-- SEÇÃO LEILÃO: REGISTRO DE VENDA -->
+        <section class="px-4 mt-2">
+            <div class="bg-white rounded-2xl border-2 border-primary/10 shadow-lg overflow-hidden">
+                <div class="bg-primary/5 p-4 border-b border-primary/10 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">gavel</span>
+                        <h3 class="font-bold text-slate-800 uppercase text-sm italic">Registro de Arremate</h3>
+                    </div>
+                    <span class="text-[10px] font-bold bg-primary text-white px-2 py-0.5 rounded-full animate-pulse">LOTE ATUAL</span>
+                </div>
+
+                <div class="p-5 space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase px-1">Número do Lote</label>
+                            <input id="lote_id" type="number" placeholder="042" class="w-full bg-slate-50 border-slate-200 rounded-lg p-3 font-bold text-lg focus:bg-white transition-all">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase px-1">Comissão (%)</label>
+                            <input id="comissao_id" type="number" placeholder="8" class="w-full bg-slate-50 border-slate-200 rounded-lg p-3 font-bold text-lg focus:bg-white transition-all">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase px-1">Valor Total do Arremate (R$)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-primary">R$</span>
+                            <input id="valor_total_id" type="number" step="0.01" placeholder="0,00" class="w-full bg-slate-50 border-slate-200 rounded-lg p-4 pl-10 text-2xl font-black text-primary focus:bg-white transition-all">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase px-1">Nome do Comprador</label>
+                        <div class="relative">
+                            <input id="comprador_id" type="text" placeholder="Buscar cliente..." class="w-full bg-slate-50 border-slate-200 rounded-lg p-3 pl-10 font-medium focus:bg-white transition-all">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+                        </div>
+                    </div>
+
+                    <!-- Botão de Ação -->
+                    <button id="btn_confirmar" class="w-full h-16 bg-primary text-white rounded-xl font-black text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 active:scale-95 transition-all mt-4 hover:bg-primary/90">
+                        <span class="material-symbols-outlined text-3xl">check_circle</span>
+                        CONFIRMAR VENDA
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ÚLTIMOS ARREMATES (Lista) -->
+        <section class="px-4 mt-8">
+            <div class="flex justify-between items-center mb-4">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Últimos Arremates</h4>
+                <button class="text-[10px] font-bold text-primary">VER HISTÓRICO</button>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-white p-4 rounded-xl border border-primary/5 flex justify-between items-center shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-slate-100 size-10 rounded-lg flex items-center justify-center font-bold text-slate-400 text-xs">#41</div>
+                        <div>
+                            <p class="font-bold text-sm text-slate-800">Haras São José</p>
+                            <p class="text-[10px] text-slate-400 font-medium">Lote de Brangus Elite</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-black text-primary text-sm">R$ 142.000</p>
+                        <p class="text-[9px] text-green-600 font-bold uppercase">Concluído</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- BARRA DE NAVEGAÇÃO INFERIOR (App Style) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-primary/10 h-20 flex justify-around items-center px-2 pb-4 z-50">
+        <button class="flex flex-col items-center gap-1 text-slate-400">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="text-[10px] font-bold">Início</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-slate-400">
+            <span class="material-symbols-outlined">agriculture</span>
+            <span class="text-[10px] font-bold">Manejo</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 active-nav">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">gavel</span>
+            <span class="text-[10px] font-bold">Leilões</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-slate-400">
+            <span class="material-symbols-outlined">payments</span>
+            <span class="text-[10px] font-bold">Finanças</span>
+        </button>
+    </nav>
+
+    <!-- SCRIPT FIREBASE E LÓGICA -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Configuração capturada do seu código original
+        const firebaseConfig = {
+            apiKey: "AIzaSyC5aXTHrFD5Vw-AyeDhmj85VwN2vmlsLk4",
+            authDomain: "indiana-dd5bf.firebaseapp.com",
+            projectId: "indiana-dd5bf",
+            storageBucket: "indiana-dd5bf.firebasestorage.app",
+            messagingSenderId: "1066097977043",
+            appId: "1:1066097977043:web:c77f739077af6b75b1626"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Função de Registro corrigida
+        async function registrarVenda() {
+            const btn = document.getElementById('btn_confirmar');
+            
+            try {
+                // Captura os valores exatos
+                const lote = document.getElementById('lote_id').value;
+                const comissao = document.getElementById('comissao_id').value;
+                const valorTotal = document.getElementById('valor_total_id').value;
+                const comprador = document.getElementById('comprador_id').value;
+
+                // Validação
+                if (!lote || !valorTotal) {
+                    alert("⚠️ Por favor, preencha o número do lote e o valor do arremate.");
+                    return;
+                }
+
+                // Feedback visual de carregamento
+                btn.disabled = true;
+                btn.innerText = "REGISTRANDO...";
+                btn.classList.add('opacity-50');
+
+                console.log("Salvando venda no Firebase...");
+
+                // Envia para a coleção "vendas"
+                const docRef = await addDoc(collection(db, "vendas"), {
+                    lote: lote,
+                    comissao: comissao || "0",
+                    valorTotal: Number(valorTotal),
+                    comprador: comprador || "Não informado",
+                    dataVenda: serverTimestamp(),
+                    status: "Vendido"
+                });
+
+                alert("✅ Venda registrada com sucesso no sistema!");
+                
+                // Limpa os campos
+                document.getElementById('lote_id').value = "";
+                document.getElementById('valor_total_id').value = "";
+                document.getElementById('comprador_id').value = "";
+
+            } catch (error) {
+                console.error("Erro Firebase:", error);
+                alert("❌ Erro ao salvar: " + error.message);
+            } finally {
+                // Restaura o botão
+                btn.disabled = false;
+                btn.innerHTML = '<span class="material-symbols-outlined text-3xl">check_circle</span> CONFIRMAR VENDA';
+                btn.classList.remove('opacity-50');
+            }
+        }
+
+        // Event Listener
+        document.getElementById('btn_confirmar').addEventListener('click', registrarVenda);
+    </script>
+</body>
+</html>
