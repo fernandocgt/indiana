@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Fazenda Indiana - Manejo e Reprodução</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#bd600f",
+                        "background-light": "#fcf8f5",
+                        "background-dark": "#1a120b",
+                    },
+                    fontFamily: { "display": ["Noto Serif", "serif"] },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Noto Serif', serif; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .sidebar-active { background-color: rgba(189, 96, 15, 0.1); border-left: 4px solid #bd600f; }
+        .genealogy-scroll { cursor: grab; }
+        .genealogy-scroll:active { cursor: grabbing; }
+    </style>
+</head>
+
+<body class="bg-background-light text-slate-900 min-h-screen">
+
+    <div class="flex h-screen overflow-hidden flex-col">
+        
+        <!-- HEADER -->
+        <header class="h-16 bg-white border-b border-primary/20 flex items-center justify-between px-4 shrink-0 z-50">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary/10 p-2 rounded-lg text-primary">
+                    <span class="material-symbols-outlined">agriculture</span>
+                </div>
+                <div>
+                    <h1 class="text-sm font-bold leading-none">Manejo Animal</h1>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest">Fazenda Indiana</p>
+                </div>
+            </div>
+            <button class="bg-primary text-white p-2 rounded-full shadow-lg">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+        </header>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <div class="flex flex-1 overflow-hidden lg:flex-row flex-col">
+            
+            <!-- LISTA DE ANIMAIS (Oculta no detalhe mobile se desejar, aqui visível como carrossel ou lista superior) -->
+            <aside class="w-full lg:w-80 border-r border-primary/10 bg-white flex flex-col shrink-0">
+                <div class="p-3 border-b border-slate-50 flex gap-2 overflow-x-auto no-scrollbar">
+                    <button class="px-4 py-1.5 bg-primary text-white rounded-full text-[10px] font-bold whitespace-nowrap">TODOS (124)</button>
+                    <button class="px-4 py-1.5 bg-slate-100 text-slate-500 rounded-full text-[10px] font-bold whitespace-nowrap">PRENHES</button>
+                    <button class="px-4 py-1.5 bg-slate-100 text-slate-500 rounded-full text-[10px] font-bold whitespace-nowrap">TOUROS</button>
+                </div>
+                <div class="flex-1 overflow-y-auto lg:block hidden">
+                    <!-- Item de Lista (Desktop) -->
+                    <div class="p-4 sidebar-active">
+                        <p class="font-bold text-sm text-slate-900">Brangus PO #8293</p>
+                        <p class="text-[10px] text-slate-500 uppercase">Macho • 34 meses • Piquete 04</p>
+                    </div>
+                    <div class="p-4 border-b border-slate-50 opacity-60">
+                        <p class="font-bold text-sm">Vaca Matriz #712</p>
+                        <p class="text-[10px] uppercase">Fêmea • 5 anos • Curral A</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- PAINEL DE DETALHES -->
+            <main class="flex-1 overflow-y-auto no-scrollbar pb-24 bg-slate-50/50">
+                
+                <!-- Perfil do Animal -->
+                <div class="bg-white p-4 lg:p-8 border-b border-primary/10">
+                    <div class="flex flex-col md:flex-row gap-6 items-center lg:items-start text-center lg:text-left">
+                        <div class="relative size-28 lg:size-32 rounded-2xl border-4 border-primary/10 overflow-hidden shadow-xl">
+                            <img src="https://images.unsplash.com/photo-1547496613-4e193fb35460?q=80&w=300&auto=format&fit=crop" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="text-2xl font-black text-slate-900">Touro Brangus #8293</h2>
+                            <div class="flex flex-wrap justify-center lg:justify-start gap-3 mt-2">
+                                <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded">PO ELITE</span>
+                                <span class="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded">REGISTRADO</span>
+                                <span class="bg-green-50 text-green-600 text-[10px] font-bold px-2 py-1 rounded">ATIVO</span>
+                            </div>
+                            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                                <div><p class="text-[10px] text-slate-400 uppercase font-bold">Peso Atual</p><p class="font-black text-lg">840 kg</p></div>
+                                <div><p class="text-[10px] text-slate-400 uppercase font-bold">Escore</p><p class="font-black text-lg">4.2</p></div>
+                                <div class="col-span-2 lg:col-span-1"><p class="text-[10px] text-slate-400 uppercase font-bold">Localização</p><p class="font-bold text-sm text-primary">Piquete 04 (Lote A)</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Árvore Genealógica (Mobile Friendly) -->
+                <section class="p-4 lg:p-8">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">account_tree</span> Genealogia
+                    </h3>
+                    <div class="overflow-x-auto no-scrollbar pb-4 -mx-4 px-4 genealogy-scroll">
+                        <div class="inline-flex gap-4 items-center">
+                            <!-- Pai -->
+                            <div class="bg-white p-3 rounded-xl border border-primary/20 w-40 shadow-sm shrink-0">
+                                <p class="text-[8px] font-bold text-primary uppercase">Genitor (Pai)</p>
+                                <p class="font-bold text-xs truncate">Big Brangus #1202</p>
+                            </div>
+                            <span class="material-symbols-outlined text-slate-300">add</span>
+                            <!-- Mãe -->
+                            <div class="bg-white p-3 rounded-xl border border-primary/20 w-40 shadow-sm shrink-0">
+                                <p class="text-[8px] font-bold text-primary uppercase">Matriz (Mãe)</p>
+                                <p class="font-bold text-xs truncate">Serena #881</p>
+                            </div>
+                            <span class="material-symbols-outlined text-primary">arrow_forward</span>
+                            <!-- Animal -->
+                            <div class="bg-primary/5 p-4 rounded-xl border-2 border-primary w-44 shadow-md shrink-0">
+                                <p class="text-[8px] font-bold text-primary uppercase">Indivíduo</p>
+                                <p class="font-black text-sm">#8293</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Histórico Médico (Layout em Cards para Mobile) -->
+                <section class="p-4 lg:p-8 space-y-4">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">history_edu</span> Protocolos Médicos
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <p class="font-bold text-sm">Vacinação Febre Aftosa</p>
+                                <span class="bg-green-100 text-green-700 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">Concluído</span>
+                            </div>
+                            <p class="text-xs text-slate-500">Data: 15 Jan 2024 • Resp: Dr. Marcos</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <p class="font-bold text-sm">Vermifugação</p>
+                                <span class="bg-green-100 text-green-700 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">Concluído</span>
+                            </div>
+                            <p class="text-xs text-slate-500">Data: 20 Nov 2023 • Resp: Téc. João</p>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+
+        <!-- BARRA DE NAVEGAÇÃO INFERIOR -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-primary/10 h-16 flex justify-around items-center z-50 px-2 pb-2">
+            <button class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[9px] font-bold">Painel</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-primary">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">agriculture</span>
+                <span class="text-[9px] font-bold">Manejo</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">gavel</span>
+                <span class="text-[9px] font-bold">Leilões</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[9px] font-bold">Perfil</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <!-- Firebase e Lógica -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyC5aXTHrFD5Vw-AyeDhmj85VwN2vmlsLk4",
+          authDomain: "indiana-dd5bf.firebaseapp.com",
+          projectId: "indiana-dd5bf",
+          storageBucket: "indiana-dd5bf.firebasestorage.app",
+          messagingSenderId: "1066097977043",
+          appId: "1:1066097977043:web:c77f739077af6b75b1626"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        console.log("Sistema de Manejo Indiana Conectado.");
+    </script>
+
+</body>
+</html>
