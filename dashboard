@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" class="light">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
     <title>Fazenda Indiana - Gestão Integrada</title>
     
-    <!-- Scripts e Fontes -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
@@ -20,15 +19,13 @@
                         "background-light": "#fcf9f7",
                         "background-dark": "#1a1410",
                     },
-                    fontFamily: {
-                        "display": ["Noto Serif", "serif"]
-                    }
+                    fontFamily: { "display": ["Noto Serif", "serif"] }
                 },
             },
         }
     </script>
 
-    <!-- Firebase SDK (Carregamento básico) -->
+    <!-- Firebase SDK (Essencial para não dar erro) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         const firebaseConfig = {
@@ -42,108 +39,132 @@
     </script>
 
     <style>
-        body { font-family: 'Noto Serif', serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Noto Serif', serif; -webkit-tap-highlight-color: transparent; }
+        /* Esconder barra de rolagem mas manter funcionalidade */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 min-h-screen">
-    <div class="flex h-screen overflow-hidden">
+
+<div class="flex h-screen overflow-hidden">
+    
+    <!-- SIDEBAR (Apenas para Desktop - lg:flex) -->
+    <aside class="hidden lg:flex w-64 flex-shrink-0 bg-white border-r border-primary/10 flex-col">
+        <div class="p-6">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary text-white size-10 rounded-lg flex items-center justify-center font-bold">GT</div>
+                <h1 class="text-lg font-bold">Fazenda Indiana</h1>
+            </div>
+        </div>
+        <nav class="flex-1 px-4 space-y-2">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary rounded-lg font-medium">
+                <span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-primary/5 rounded-lg">
+                <span class="material-symbols-outlined">gavel</span> Leilões
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="flex-1 flex flex-col overflow-hidden relative">
         
-        <!-- Sidebar: Oculta no Mobile (hidden), visível no Desktop (lg:flex) -->
-        <aside class="hidden lg:flex w-64 flex-shrink-0 bg-white dark:bg-slate-900 border-r border-primary/10 flex-col">
-            <div class="p-6 flex flex-col gap-1">
-                <div class="flex items-center gap-3">
-                    <div class="bg-primary text-white size-10 rounded-lg flex items-center justify-center font-bold text-xl">GT</div>
-                    <div>
-                        <h1 class="text-lg font-bold leading-tight">Fazenda Indiana</h1>
-                        <p class="text-xs text-primary font-medium uppercase">Gestão Integrada</p>
-                    </div>
-                </div>
+        <!-- Top Bar -->
+        <header class="h-16 bg-white border-b border-primary/10 flex items-center justify-between px-4 lg:px-8 shrink-0">
+            <div class="flex items-center gap-2">
+                <div class="lg:hidden bg-primary text-white size-8 rounded flex items-center justify-center font-bold text-sm">GT</div>
+                <h2 class="text-lg font-bold truncate">Resumo Geral</h2>
             </div>
-            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-                <a class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary rounded-lg font-medium" href="#">
-                    <span class="material-symbols-outlined">dashboard</span> Dashboard
-                </a>
-                <a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-primary/5 rounded-lg font-medium" href="#">
-                    <span class="material-symbols-outlined">agriculture</span> Manejo
-                </a>
-                <!-- ... outros links ... -->
-            </nav>
-        </aside>
+            <div class="flex items-center gap-3">
+                <button class="p-2 text-slate-500"><span class="material-symbols-outlined">search</span></button>
+                <button class="p-2 text-slate-500"><span class="material-symbols-outlined">notifications</span></button>
+            </div>
+        </header>
 
-        <!-- Conteúdo Principal -->
-        <main class="flex-1 flex flex-col overflow-hidden w-full">
+        <!-- Dashboard Scrollable Area -->
+        <div class="flex-1 overflow-y-auto p-4 lg:p-8 space-y-6 no-scrollbar pb-24 lg:pb-8">
             
-            <!-- Top Bar: Ajustada para Mobile -->
-            <header class="h-16 bg-white dark:bg-slate-900 border-b border-primary/10 flex items-center justify-between px-4 lg:px-8">
-                <div class="flex items-center gap-2">
-                    <!-- Botão Menu (Apenas Mobile) -->
-                    <button class="lg:hidden p-2 text-slate-500">
-                        <span class="material-symbols-outlined">menu</span>
-                    </button>
-                    <h2 class="text-lg lg:text-xl font-bold truncate">Resumo Geral</h2>
+            <!-- KPI Row (Ajustado para 1 coluna no mobile e 4 no desktop) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-primary/10 shadow-sm">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">pets</span>
+                        <span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded">+2.4%</span>
+                    </div>
+                    <p class="text-slate-500 text-xs font-medium uppercase">Rebanho Total</p>
+                    <h3 class="text-2xl font-bold">1.240</h3>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-primary/10 shadow-sm">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="material-symbols-outlined text-blue-500 bg-blue-500/10 p-2 rounded-lg">payments</span>
+                    </div>
+                    <p class="text-slate-500 text-xs font-medium uppercase">Financeiro</p>
+                    <h3 class="text-2xl font-bold">R$ 450k</h3>
                 </div>
                 
-                <div class="flex items-center gap-2 lg:gap-4">
-                    <div class="hidden md:relative md:block">
-                        <input class="pl-10 pr-4 py-2 bg-background-light border-none rounded-lg text-sm w-48 lg:w-64" placeholder="Buscar..." type="text"/>
-                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
-                    </div>
-                    <button class="p-2 text-slate-500 relative">
-                        <span class="material-symbols-outlined">notifications</span>
-                        <span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white"></span>
-                    </button>
-                </div>
-            </header>
-
-            <!-- Dashboard Content -->
-            <div class="flex-1 overflow-y-auto p-4 lg:p-8 space-y-6">
-                
-                <!-- KPI Row: Grid responsiva (1 coluna no mobile, 4 no desktop) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-white p-6 rounded-xl border border-primary/10 shadow-sm">
-                        <p class="text-slate-500 text-sm">Rebanho Total</p>
-                        <h3 class="text-3xl font-bold mt-1">1.240</h3>
-                        <p class="text-xs text-green-600 mt-2">▲ 2.4% este mês</p>
-                    </div>
-                    <!-- Repetir para outros KPIs... -->
-                </div>
-
-                <!-- Main Grid: Responsiva -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Composição do Rebanho -->
-                    <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-primary/10">
-                        <h3 class="text-xl font-bold mb-6">Composição</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="bg-background-light p-4 rounded-lg flex items-center gap-3">
-                                <span class="material-symbols-outlined text-primary">female</span>
-                                <div><p class="text-xs text-slate-500">Vacas</p><p class="font-bold">650</p></div>
-                            </div>
-                            <!-- ... outros itens ... -->
-                        </div>
-                    </div>
-                    
-                    <!-- Próximas Tarefas -->
-                    <div class="bg-white p-6 rounded-xl border border-primary/10">
-                        <h3 class="text-xl font-bold mb-4">Próximas Manobras</h3>
-                        <div class="space-y-4">
-                            <div class="flex gap-3 items-center border-b pb-3">
-                                <div class="bg-primary/10 text-primary p-2 rounded text-center min-w-[45px]">
-                                    <span class="text-sm font-bold block">12</span>
-                                    <span class="text-[10px] uppercase">Out</span>
-                                </div>
-                                <div>
-                                    <h4 class="text-sm font-bold">Vacinação Setor A</h4>
-                                    <p class="text-xs text-slate-500">Lote 402</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- Cards extras ocultos no mobile para limpar visual se desejar, ou manter assim -->
             </div>
-        </main>
-    </div>
+
+            <!-- Main Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Composição -->
+                <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-primary/10">
+                    <h3 class="font-bold mb-4">Composição do Rebanho</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                            <span class="text-sm">Vacas Matrizes</span>
+                            <span class="font-bold">650 un</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                            <span class="text-sm">Touros</span>
+                            <span class="font-bold">120 un</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Próximas Manobras -->
+                <div class="bg-white p-5 rounded-xl border border-primary/10">
+                    <h3 class="font-bold mb-4">Agenda</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="bg-primary/10 text-primary p-2 rounded text-center min-w-[40px]">
+                                <span class="text-sm font-bold block">12</span>
+                                <span class="text-[10px] uppercase">Out</span>
+                            </div>
+                            <div class="text-sm">
+                                <p class="font-bold">Vacinação Setor A</p>
+                                <p class="text-slate-500 text-xs">Lote 402 - Brangus</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB BAR INFERIOR (Apenas para Mobile - lg:hidden) -->
+        <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-primary/10 flex justify-around items-center h-16 pb-2 z-50">
+            <button class="flex flex-col items-center text-primary">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-[10px] font-bold">Início</span>
+            </button>
+            <button class="flex flex-col items-center text-slate-400">
+                <span class="material-symbols-outlined">agriculture</span>
+                <span class="text-[10px]">Manejo</span>
+            </button>
+            <button class="flex flex-col items-center text-slate-400">
+                <span class="material-symbols-outlined">gavel</span>
+                <span class="text-[10px]">Leilões</span>
+            </button>
+            <button class="flex flex-col items-center text-slate-400">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[10px]">Perfil</span>
+            </button>
+        </nav>
+
+    </main>
+</div>
+
 </body>
-</html>
+</html>    
