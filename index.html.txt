@@ -2,306 +2,192 @@
 <html class="light" lang="pt-br">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-    <title>Fazenda Indiana - Gestão de Leilão</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300;400;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Fazenda Indiana - Leilão Elite</title>
     
+    <!-- Tailwind e Fontes -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet"/>
+
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#22c55e",
-                        "primary-dark": "#16a34a",
-                        "background-light": "#fcfaf7",
-                        "rustic-brown": "#3d2b1f",
-                        "rustic-accent": "#8c6d4f",
-                        "gold": "#b8860b"
+                        "primary": "#17cf17",
+                        "background-light": "#fdfaf5",
+                        "background-dark": "#112111",
+                        "rustic-brown": "#4a3728",
+                        "rustic-accent": "#8c6d4f"
                     },
                     fontFamily: {
                         "display": ["Newsreader", "serif"]
-                    }
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
                 },
             },
         }
+    </script>
+
+    <!-- Firebase SDK (Adicionado para funcionalidade) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        // Importe outros serviços conforme necessário: firestore, auth, etc.
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyC5aXTHrFD5Vw-AyeDhmj85VwN2vmlsLk4",
+            authDomain: "indiana-dd5bf.firebaseapp.com",
+            projectId: "indiana-dd5bf",
+            storageBucket: "indiana-dd5bf.firebasestorage.app",
+            messagingSenderId: "1066097977043",
+            appId: "1:1066097977043:web:c77f739077af6b75b1626",
+            measurementId: "G-F7KGKH3T6X"
+        };
+        const app = initializeApp(firebaseConfig);
     </script>
 
     <style>
         body {
             font-family: 'Newsreader', serif;
             -webkit-tap-highlight-color: transparent;
-            overscroll-behavior-y: contain;
+            min-height: max(884px, 100dvh);
         }
-        .pulse-live {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .5; }
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        input:focus {
-            outline: none !important;
-            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
+        .high-contrast-shadow {
+            box-shadow: 0 4px 0px 0px rgba(74, 55, 40, 0.2);
         }
     </style>
 </head>
 
-<body class="bg-stone-100 text-rustic-brown">
+<body class="bg-background-light dark:bg-background-dark text-rustic-brown selection:bg-primary/30">
 
-    <!-- Mobile Wrapper -->
-    <div class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto bg-background-light shadow-2xl border-x border-stone-200">
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden max-w-[430px] mx-auto bg-background-light border-x border-rustic-brown/10">
         
-        <!-- Header Superior -->
-        <header class="sticky top-0 z-[100] bg-background-light/80 backdrop-blur-md px-4 py-3 border-b border-rustic-brown/5 flex items-center justify-between">
+        <!-- Header -->
+        <header class="flex items-center justify-between px-4 py-4 bg-background-light sticky top-0 z-50 border-b border-rustic-brown/10">
             <div class="flex items-center gap-3">
-                <div class="size-10 flex items-center justify-center rounded-full bg-rustic-brown text-white font-bold border-2 border-rustic-accent shadow-lg">
-                    FI
+                <div class="flex size-10 items-center justify-center rounded-full bg-rustic-brown text-white font-bold text-lg border-2 border-rustic-accent shadow-sm">
+                    GT
                 </div>
                 <div>
-                    <h1 class="text-lg font-extrabold leading-none tracking-tight text-rustic-brown">Fazenda Indiana</h1>
-                    <div class="flex items-center gap-1">
-                        <span class="size-1.5 rounded-full bg-primary pulse-live"></span>
-                        <p class="text-[10px] uppercase tracking-tighter text-rustic-accent font-bold">Painel do Leiloeiro</p>
-                    </div>
+                    <h1 class="text-xl font-extrabold leading-none tracking-tight text-rustic-brown">Fazenda Indiana</h1>
+                    <p class="text-[10px] uppercase tracking-widest text-rustic-accent font-bold">Genética de Resultados</p>
                 </div>
             </div>
-            <div class="flex gap-2">
-                <button class="size-9 flex items-center justify-center rounded-full bg-stone-200/50 text-rustic-brown active:scale-90 transition-transform">
-                    <span class="material-symbols-outlined text-[20px]">search</span>
-                </button>
-                <button class="size-9 flex items-center justify-center rounded-full bg-stone-200/50 text-rustic-brown active:scale-90 transition-transform relative">
-                    <span class="material-symbols-outlined text-[20px]">notifications</span>
-                    <span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white"></span>
-                </button>
-            </div>
+            <button aria-label="Notificações" class="flex size-10 items-center justify-center rounded-full bg-rustic-brown/5 text-rustic-brown active:bg-rustic-brown/10">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
         </header>
 
-        <!-- Conteúdo Principal -->
-        <main class="flex-1 pb-40">
-            
-            <!-- Hero Lote Atual -->
+        <main class="flex-1 pb-32">
+            <!-- Hero Section -->
             <div class="px-4 py-4">
-                <div class="relative overflow-hidden rounded-2xl aspect-[16/10] shadow-xl group">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" 
-                         style='background-image: linear-gradient(to top, rgba(34, 25, 18, 0.9) 0%, rgba(34, 25, 18, 0.2) 50%, rgba(0,0,0,0) 100%), url("https://images.unsplash.com/photo-1543906965-f9520aa2ed8a?q=80&w=800&auto=format&fit=crop");'>
+                <div class="relative overflow-hidden rounded-xl aspect-[16/9] shadow-lg group">
+                    <div class="absolute inset-0 bg-cover bg-center" style='background-image: linear-gradient(0deg, rgba(74, 55, 40, 0.8) 0%, rgba(0, 0, 0, 0) 60%), url("https://images.unsplash.com/photo-1547496613-4e193fb35460?q=80&w=1000&auto=format&fit=crop");'></div>
+                    <div class="absolute bottom-0 left-0 p-4 w-full">
+                        <span class="inline-block px-2 py-0.5 rounded bg-primary text-white text-[10px] font-bold uppercase mb-1">Em Andamento</span>
+                        <h2 class="text-white text-2xl font-bold leading-tight">Lote #042 - Brangus Elite</h2>
                     </div>
-                    
-                    <div class="absolute top-3 left-3">
-                        <span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/90 text-white text-[10px] font-black uppercase backdrop-blur-sm">
-                            <span class="size-1.5 rounded-full bg-white pulse-live"></span>
-                            Em Andamento
-                        </span>
-                    </div>
-
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <p class="text-white/70 text-[10px] font-bold uppercase tracking-[0.2em]">Genética Provada</p>
-                        <h2 class="text-white text-2xl font-black leading-tight">Lote #042 • 45 Novilhas</h2>
-                        <div class="flex gap-4 mt-2">
-                            <div class="flex items-center gap-1 text-white/90 text-xs">
-                                <span class="material-symbols-outlined text-sm text-primary">verified</span>
-                                Brangus Elite
-                            </div>
-                            <div class="flex items-center gap-1 text-white/90 text-xs">
-                                <span class="material-symbols-outlined text-sm text-primary">location_on</span>
-                                Curral A-12
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button class="absolute top-3 right-3 size-10 flex items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md border border-white/20 active:bg-white/30 transition-all shadow-inner">
-                        <span class="material-symbols-outlined text-xl">fullscreen</span>
+                    <button aria-label="Editar" class="absolute top-3 right-3 size-10 flex items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm border border-white/20 active:scale-95 transition-transform z-10">
+                        <span class="material-symbols-outlined text-2xl">edit</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Dashboard de Métricas Rápidas -->
-            <div class="grid grid-cols-2 gap-3 px-4 mb-8">
-                <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
-                    <p class="text-[10px] font-bold text-rustic-accent uppercase tracking-widest mb-1">Média/Peso</p>
+            <!-- Metrics -->
+            <div class="grid grid-cols-2 gap-3 px-4 mb-6">
+                <div class="flex flex-col gap-1 rounded-xl p-4 bg-white border border-rustic-brown/10 high-contrast-shadow">
+                    <p class="text-rustic-accent text-xs font-bold uppercase tracking-wider">Quantidade</p>
                     <div class="flex items-baseline gap-1">
-                        <span class="text-2xl font-black text-rustic-brown tracking-tighter">420</span>
-                        <span class="text-xs font-bold text-rustic-accent">kg</span>
+                        <p class="text-rustic-brown text-2xl font-black">45</p>
+                        <p class="text-rustic-accent text-xs">animais</p>
                     </div>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
-                    <p class="text-[10px] font-bold text-rustic-accent uppercase tracking-widest mb-1">Preço/Kg</p>
-                    <div class="flex items-baseline justify-between">
-                        <span class="text-2xl font-black text-primary tracking-tighter">R$ 12,50</span>
-                        <span class="text-[10px] text-green-600 font-bold">+2.4%</span>
+                <div class="flex flex-col gap-1 rounded-xl p-4 bg-white border border-rustic-brown/10 high-contrast-shadow">
+                    <p class="text-rustic-accent text-xs font-bold uppercase tracking-wider">Peso Médio</p>
+                    <div class="flex items-baseline gap-1">
+                        <p class="text-rustic-brown text-2xl font-black">420</p>
+                        <p class="text-rustic-accent text-xs font-bold">kg</p>
                     </div>
                 </div>
-                <div class="col-span-2 bg-rustic-brown p-5 rounded-2xl shadow-lg relative overflow-hidden">
-                    <div class="relative z-10 flex justify-between items-center">
-                        <div>
-                            <p class="text-[10px] font-bold text-rustic-accent uppercase tracking-widest mb-1">Lance Atual Estimado</p>
-                            <p class="text-3xl font-black text-white tracking-tighter">R$ 236.250,00</p>
-                        </div>
-                        <div class="size-12 bg-white/10 rounded-xl flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary text-3xl">payments</span>
+                <div class="flex flex-col gap-1 rounded-xl p-4 bg-rustic-brown text-white col-span-2 shadow-md">
+                    <p class="text-rustic-accent text-xs font-bold uppercase tracking-wider">Valor por kg</p>
+                    <div class="flex items-center justify-between">
+                        <p class="text-primary text-3xl font-black">R$ 12,50</p>
+                        <div class="flex items-center gap-1 bg-white/10 px-2 py-1 rounded">
+                            <span class="material-symbols-outlined text-primary text-sm">trending_up</span>
+                            <span class="text-[10px] font-bold">+2.4%</span>
                         </div>
                     </div>
-                    <div class="absolute -right-4 -bottom-4 size-24 bg-primary/10 rounded-full blur-2xl"></div>
                 </div>
             </div>
 
-            <!-- Formulário de Arremate -->
-            <section class="px-4 mb-10">
-                <div class="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="size-8 rounded-lg bg-stone-100 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-rustic-accent text-xl">gavel</span>
-                        </div>
-                        <h3 class="text-rustic-brown font-black uppercase text-sm tracking-widest">Painel de Registro</h3>
+            <!-- Form -->
+            <section class="px-4 mb-8">
+                <div class="bg-white rounded-xl border-2 border-rustic-brown/10 p-4">
+                    <div class="flex items-center gap-2 mb-4 border-b border-rustic-brown/5 pb-2">
+                        <span class="material-symbols-outlined text-rustic-accent">gavel</span>
+                        <h3 class="text-rustic-brown text-lg font-bold leading-tight uppercase tracking-tight">Registro Rápido</h3>
                     </div>
-                    
-                    <div class="space-y-5">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="space-y-1.5">
-                                <label class="text-[10px] font-black text-rustic-accent uppercase ml-1">Comissão (%)</label>
-                                <input type="number" value="8" class="w-full bg-stone-50 border-stone-200 rounded-xl h-12 px-4 font-bold text-lg text-rustic-brown focus:bg-white transition-colors">
-                            </div>
-                            <div class="space-y-1.5">
-                                <label class="text-[10px] font-black text-rustic-accent uppercase ml-1">Lances (Qtd)</label>
-                                <input type="number" placeholder="01" class="w-full bg-stone-50 border-stone-200 rounded-xl h-12 px-4 font-bold text-lg text-rustic-brown focus:bg-white transition-colors">
-                            </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[10px] font-bold text-rustic-accent uppercase px-1">ID do Lote</label>
+                            <input id="lote_id" class="w-full bg-background-light border-rustic-brown/20 rounded-lg h-12 px-4 focus:ring-primary focus:border-primary text-rustic-brown font-bold text-lg" placeholder="042" type="number"/>
                         </div>
-
-                        <div class="space-y-1.5">
-                            <label class="text-[10px] font-black text-rustic-accent uppercase ml-1">Valor do Arremate (Total R$)</label>
-                            <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-stone-400">R$</span>
-                                <input type="number" placeholder="0,00" class="w-full bg-stone-50 border-stone-200 rounded-xl h-14 pl-12 pr-4 font-black text-2xl text-rustic-brown focus:bg-white transition-colors">
-                            </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[10px] font-bold text-rustic-accent uppercase px-1">Comissão (%)</label>
+                            <input id="comissao" class="w-full bg-background-light border-rustic-brown/20 rounded-lg h-12 px-4 focus:ring-primary focus:border-primary text-rustic-brown font-bold text-lg" placeholder="8" type="number" step="0.1"/>
                         </div>
-
-                        <div class="space-y-1.5">
-                            <label class="text-[10px] font-black text-rustic-accent uppercase ml-1">Comprador / CPF / CNPJ</label>
+                        <div class="flex flex-col gap-1.5 col-span-2">
+                            <label class="text-[10px] font-bold text-rustic-accent uppercase px-1">Preço Total (R$)</label>
+                            <input id="preco_total" class="w-full bg-background-light border-rustic-brown/20 rounded-lg h-14 px-4 focus:ring-primary focus:border-primary text-rustic-brown font-black text-2xl" placeholder="0,00" type="number" step="0.01"/>
+                        </div>
+                        <div class="flex flex-col gap-1.5 col-span-2">
+                            <label class="text-[10px] font-bold text-rustic-accent uppercase px-1">Comprador</label>
                             <div class="relative">
-                                <input type="text" placeholder="Buscar cliente..." class="w-full bg-stone-50 border-stone-200 rounded-xl h-12 pl-11 pr-4 font-medium text-rustic-brown focus:bg-white transition-colors">
-                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-rustic-accent">person_search</span>
+                                <input id="comprador" class="w-full bg-background-light border-rustic-brown/20 rounded-lg h-12 pl-10 pr-4 focus:ring-primary focus:border-primary text-rustic-brown font-medium" placeholder="Buscar comprador..." type="text"/>
+                                <span class="material-symbols-outlined absolute left-3 top-3 text-rustic-accent text-sm">search</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Histórico Recente -->
+            <!-- Lista de Arremates -->
             <section class="px-4 mb-4">
-                <div class="flex items-center justify-between mb-4 px-1">
-                    <h3 class="text-rustic-brown text-[11px] font-black uppercase tracking-widest">Últimos Arremates</h3>
-                    <button class="text-[10px] text-primary font-black uppercase border-b-2 border-primary/20">Ver Histórico</button>
+                <div class="flex items-center justify-between mb-3 px-1">
+                    <h3 class="text-rustic-brown text-sm font-black uppercase tracking-widest">Últimos Arremates</h3>
+                    <button class="text-xs text-rustic-accent font-bold hover:underline">Ver Todos</button>
                 </div>
-                
-                <div class="space-y-3">
-                    <!-- Card Histórico 1 -->
-                    <div class="group flex items-center justify-between bg-white p-4 rounded-2xl border border-stone-200 shadow-sm active:scale-95 transition-transform">
-                        <div class="flex items-center gap-4">
-                            <div class="size-12 rounded-xl bg-stone-100 flex flex-col items-center justify-center border border-stone-200">
-                                <span class="text-[10px] font-bold text-rustic-accent">LOT</span>
-                                <span class="text-sm font-black text-rustic-brown leading-none">041</span>
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center justify-between bg-white p-3 rounded-lg border border-rustic-brown/5 shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="size-10 rounded bg-background-light flex items-center justify-center border border-rustic-brown/10">
+                                <span class="text-xs font-black text-rustic-brown">#041</span>
                             </div>
                             <div>
                                 <p class="text-sm font-bold text-rustic-brown">Haras São José</p>
-                                <p class="text-[10px] text-rustic-accent font-medium uppercase tracking-tight">38 Animais • Nelore PO</p>
+                                <p class="text-[10px] text-rustic-accent font-medium">38 Animais • Brangus</p>
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm font-black text-rustic-brown tracking-tighter">R$ 142.000</p>
-                            <span class="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[9px] font-black uppercase tracking-tighter">Liquidado</span>
+                            <p class="text-sm font-black text-rustic-brown">R$ 142.000</p>
+                            <p class="text-[10px] text-primary font-bold">VENDIDO</p>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- Barra de Ação Fixa -->
-        <div class="fixed bottom-0 left-0 right-0 z-[110] max-w-[430px] mx-auto">
-            <!-- Botão de Venda -->
-            <div class="px-4 pb-4">
-                <button class="w-full h-16 bg-primary hover:bg-primary-dark text-white rounded-2xl shadow-xl shadow-primary/30 flex items-center justify-center gap-3 active:scale-[0.97] transition-all">
-                    <span class="material-symbols-outlined text-2xl font-bold">check_circle</span>
-                    <span class="text-lg font-black uppercase tracking-tight">Confirmar Venda</span>
-                </button>
-            </div>
-            
-            <!-- Bottom Navigation -->
-            <nav class="bg-white/95 backdrop-blur-md border-t border-stone-200 px-6 py-3 flex items-center justify-between pb-6">
-                <button class="flex flex-col items-center gap-1 text-primary">
-                    <span class="material-symbols-outlined text-2xl font-bold">home</span>
-                    <span class="text-[9px] font-black uppercase tracking-tighter">Início</span>
-                </button>
-                <button class="flex flex-col items-center gap-1 text-stone-400 hover:text-rustic-brown transition-colors">
-                    <span class="material-symbols-outlined text-2xl">list_alt</span>
-                    <span class="text-[9px] font-black uppercase tracking-tighter">Lotes</span>
-                </button>
-                <button class="flex flex-col items-center gap-1 text-stone-400 hover:text-rustic-brown transition-colors">
-                    <span class="material-symbols-outlined text-2xl">analytics</span>
-                    <span class="text-[9px] font-black uppercase tracking-tighter">Relatórios</span>
-                </button>
-                <button class="flex flex-col items-center gap-1 text-stone-400 hover:text-rustic-brown transition-colors">
-                    <span class="material-symbols-outlined text-2xl">person_outline</span>
-                    <span class="text-[9px] font-black uppercase tracking-tighter">Perfil</span>
-                </button>
-            </nav>
+        <!-- Fixed Bottom Bar -->
+        <div class="fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-rustic-brown/10 z-50 max-w-[430px] mx-auto">
+            <button id="btn_confirmar" class="w-full h-16 bg-primary hover:bg-primary/90 text-white rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-3 active:scale-[0.98] transition-transform">
+                <span class="material-symbols-outlined text-3xl">check_circle</span>
+                <span class="text-xl font-black uppercase tracking-tighter">Confirmar Venda</span>
+            </button>
         </div>
-
     </div>
 
-<script type="module">
-  // Importação dos módulos necessários do Firebase via CDN
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  // Suas credenciais exclusivas do projeto Indiana
-  const firebaseConfig = {
-    apiKey: "AIzaSyC5aXTHrFD5Vw-AyeDhmj85VwN2vmlsLk4",
-    authDomain: "indiana-dd5bf.firebaseapp.com",
-    projectId: "indiana-dd5bf",
-    storageBucket: "indiana-dd5bf.firebasestorage.app",
-    messagingSenderId: "1066097977043",
-    appId: "1:1066097977043:web:c77f739077af6b75b1626",
-    measurementId: "G-F7KGKH3T6X"
-  };
-
-  // Inicializa o Firebase e o Firestore
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // Função para salvar o arremate no banco de dados
-  async function registrarVenda() {
-    // Captura os valores dos inputs do seu formulário
-    const comissao = document.querySelector('input[value="8"]').value;
-    const lances = document.querySelectorAll('input[type="number"]')[1].value;
-    const valorArremate = document.querySelectorAll('input[type="number"]')[2].value;
-    const comprador = document.querySelector('input[placeholder="Buscar cliente..."]').value;
-
-    try {
-      // Envia os dados para a coleção "vendas" no Firestore
-      const docRef = await addDoc(collection(db, "vendas"), {
-        lote: "042", // Exemplo fixo baseado no seu HTML atual
-        comissao: comissao,
-        quantidadeLances: lances,
-        valorTotal: valorArremate,
-        comprador: comprador,
-        dataVenda: serverTimestamp()
-      });
-
-      alert("Venda registrada com sucesso no sistema Indiana!");
-      console.log("ID da Transação: ", docRef.id);
-    } catch (error) {
-      console.error("Erro ao salvar no Firestore: ", error);
-      alert("Erro ao conectar com o banco de dados.");
-    }
-  }
-
-  // Vincula a função ao seu botão "Confirmar Venda"
-  document.querySelector('button.bg-primary').addEventListener('click', registrarVenda);
-</script>
 </body>
 </html>
