@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html class="light" lang="pt-br">
+<html lang="pt-br" class="light">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Fazenda Indiana - Leilão Elite</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Fazenda Indiana - Gestão Integrada</title>
     
-    <!-- Tailwind e Fontes -->
+    <!-- Scripts de Estilo -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
 
     <script id="tailwind-config">
         tailwind.config = {
@@ -16,178 +16,211 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#17cf17",
-                        "background-light": "#fdfaf5",
-                        "background-dark": "#112111",
-                        "rustic-brown": "#4a3728",
-                        "rustic-accent": "#8c6d4f"
+                        "primary": "#bd600f",
+                        "background-light": "#fcf9f7",
+                        "background-dark": "#1a1410",
                     },
-                    fontFamily: {
-                        "display": ["Newsreader", "serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    fontFamily: { "display": ["Noto Serif", "serif"] },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem"}
                 },
             },
         }
     </script>
 
-    <!-- Firebase SDK (Adicionado para funcionalidade) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        // Importe outros serviços conforme necessário: firestore, auth, etc.
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyC5aXTHrFD5Vw-AyeDhmj85VwN2vmlsLk4",
-            authDomain: "indiana-dd5bf.firebaseapp.com",
-            projectId: "indiana-dd5bf",
-            storageBucket: "indiana-dd5bf.firebasestorage.app",
-            messagingSenderId: "1066097977043",
-            appId: "1:1066097977043:web:c77f739077af6b75b1626",
-            measurementId: "G-F7KGKH3T6X"
-        };
-        const app = initializeApp(firebaseConfig);
-    </script>
-
     <style>
-        body {
-            font-family: 'Newsreader', serif;
-            -webkit-tap-highlight-color: transparent;
-            min-height: max(884px, 100dvh);
-        }
-        .high-contrast-shadow {
-            box-shadow: 0 4px 0px 0px rgba(74, 55, 40, 0.2);
-        }
+        body { font-family: 'Noto Serif', serif; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        input:focus { border-color: #bd600f !important; ring-color: #bd600f !important; }
     </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark text-rustic-brown selection:bg-primary/30">
+<body class="bg-background-light text-slate-900 min-h-screen">
 
-    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden max-w-[430px] mx-auto bg-background-light border-x border-rustic-brown/10">
-        
-        <!-- Header -->
-        <header class="flex items-center justify-between px-4 py-4 bg-background-light sticky top-0 z-50 border-b border-rustic-brown/10">
+<div class="flex h-screen overflow-hidden">
+    
+    <!-- SIDEBAR (Apenas Desktop) -->
+    <aside class="hidden lg:flex w-64 flex-shrink-0 bg-white border-r border-primary/10 flex-col">
+        <div class="p-6">
             <div class="flex items-center gap-3">
-                <div class="flex size-10 items-center justify-center rounded-full bg-rustic-brown text-white font-bold text-lg border-2 border-rustic-accent shadow-sm">
-                    GT
-                </div>
+                <div class="bg-primary text-white size-10 rounded-lg flex items-center justify-center font-bold">GT</div>
                 <div>
-                    <h1 class="text-xl font-extrabold leading-none tracking-tight text-rustic-brown">Fazenda Indiana</h1>
-                    <p class="text-[10px] uppercase tracking-widest text-rustic-accent font-bold">Genética de Resultados</p>
+                    <h1 class="text-lg font-bold leading-tight">Fazenda Indiana</h1>
+                    <p class="text-[10px] text-primary font-bold uppercase">Gestão Integrada</p>
                 </div>
             </div>
-            <button aria-label="Notificações" class="flex size-10 items-center justify-center rounded-full bg-rustic-brown/5 text-rustic-brown active:bg-rustic-brown/10">
-                <span class="material-symbols-outlined">notifications</span>
-            </button>
+        </div>
+        <nav class="flex-1 px-4 space-y-2">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary rounded-lg font-medium">
+                <span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-primary/5 rounded-lg transition-colors">
+                <span class="material-symbols-outlined">gavel</span> Leilões
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-primary/5 rounded-lg transition-colors">
+                <span class="material-symbols-outlined">agriculture</span> Manejo
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="flex-1 flex flex-col overflow-hidden relative">
+        
+        <!-- Top Bar -->
+        <header class="h-16 bg-white border-b border-primary/10 flex items-center justify-between px-4 lg:px-8 shrink-0 z-10">
+            <div class="flex items-center gap-2">
+                <div class="lg:hidden bg-primary text-white size-8 rounded flex items-center justify-center font-bold text-sm">GT</div>
+                <h2 class="text-lg font-bold">Resumo Geral</h2>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-500"><span class="material-symbols-outlined">notifications</span></button>
+                <div class="size-8 rounded-full bg-slate-200 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Perfil">
+                </div>
+            </div>
         </header>
 
-        <main class="flex-1 pb-32">
-            <!-- Hero Section -->
-            <div class="px-4 py-4">
-                <div class="relative overflow-hidden rounded-xl aspect-[16/9] shadow-lg group">
-                    <div class="absolute inset-0 bg-cover bg-center" style='background-image: linear-gradient(0deg, rgba(74, 55, 40, 0.8) 0%, rgba(0, 0, 0, 0) 60%), url("https://images.unsplash.com/photo-1547496613-4e193fb35460?q=80&w=1000&auto=format&fit=crop");'></div>
-                    <div class="absolute bottom-0 left-0 p-4 w-full">
-                        <span class="inline-block px-2 py-0.5 rounded bg-primary text-white text-[10px] font-bold uppercase mb-1">Em Andamento</span>
-                        <h2 class="text-white text-2xl font-bold leading-tight">Lote #042 - Brangus Elite</h2>
-                    </div>
-                    <button aria-label="Editar" class="absolute top-3 right-3 size-10 flex items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm border border-white/20 active:scale-95 transition-transform z-10">
-                        <span class="material-symbols-outlined text-2xl">edit</span>
-                    </button>
+        <!-- Área de Rolagem -->
+        <div class="flex-1 overflow-y-auto p-4 lg:p-8 space-y-6 no-scrollbar pb-32">
+            
+            <!-- KPIs Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-primary/10 shadow-sm">
+                    <p class="text-slate-500 text-xs font-bold uppercase mb-1">Rebanho Total</p>
+                    <h3 class="text-3xl font-black text-primary">1.240</h3>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-primary/10 shadow-sm">
+                    <p class="text-slate-500 text-xs font-bold uppercase mb-1">Status Leilão</p>
+                    <h3 class="text-3xl font-black text-blue-600">Lote 042</h3>
                 </div>
             </div>
 
-            <!-- Metrics -->
-            <div class="grid grid-cols-2 gap-3 px-4 mb-6">
-                <div class="flex flex-col gap-1 rounded-xl p-4 bg-white border border-rustic-brown/10 high-contrast-shadow">
-                    <p class="text-rustic-accent text-xs font-bold uppercase tracking-wider">Quantidade</p>
-                    <div class="flex items-baseline gap-1">
-                        <p class="text-rustic-brown text-2xl font-black">45</p>
-                        <p class="text-rustic-accent text-xs">animais</p>
-                    </div>
+            <!-- Formulário de Registro de Venda -->
+            <section class="bg-white p-6 rounded-2xl border-2 border-primary/5 shadow-sm space-y-4">
+                <div class="flex items-center gap-2 border-b border-slate-50 pb-3 mb-2">
+                    <span class="material-symbols-outlined text-primary">gavel</span>
+                    <h3 class="font-bold uppercase tracking-tight">Registro de Venda (Lote Atual)</h3>
                 </div>
-                <div class="flex flex-col gap-1 rounded-xl p-4 bg-white border border-rustic-brown/10 high-contrast-shadow">
-                    <p class="text-rustic-accent text-xs font-bold uppercase tracking-wider">Peso Médio</p>
-                    <div class="flex items-baseline gap-1">
-                        <p class="text-rustic-brown text-2xl font-black">420</p>
-                        <p class="text-rustic-accent text-xs font-bold">kg</p>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Lote Nº</label>
+                        <input id="lote_id" type="number" placeholder="042" class="w-full bg-slate-50 border-slate-200 rounded-lg p-3 font-bold">
                     </div>
-                </div>
-                <div class="flex flex-col gap-1 rounded-xl p-4 bg-rustic-brown text-white col-span-2 shadow-md">
-                    <p class="text-rustic-accent text-xs font-bold uppercase tracking-wider">Valor por kg</p>
-                    <div class="flex items-center justify-between">
-                        <p class="text-primary text-3xl font-black">R$ 12,50</p>
-                        <div class="flex items-center gap-1 bg-white/10 px-2 py-1 rounded">
-                            <span class="material-symbols-outlined text-primary text-sm">trending_up</span>
-                            <span class="text-[10px] font-bold">+2.4%</span>
-                        </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Comissão %</label>
+                        <input id="comissao_id" type="number" placeholder="8" class="w-full bg-slate-50 border-slate-200 rounded-lg p-3 font-bold">
                     </div>
-                </div>
-            </div>
-
-            <!-- Form -->
-            <section class="px-4 mb-8">
-                <div class="bg-white rounded-xl border-2 border-rustic-brown/10 p-4">
-                    <div class="flex items-center gap-2 mb-4 border-b border-rustic-brown/5 pb-2">
-                        <span class="material-symbols-outlined text-rustic-accent">gavel</span>
-                        <h3 class="text-rustic-brown text-lg font-bold leading-tight uppercase tracking-tight">Registro Rápido</h3>
+                    <div class="flex flex-col gap-1 col-span-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Valor do Arremate (R$)</label>
+                        <input id="valor_total_id" type="number" step="0.01" placeholder="0.00" class="w-full bg-slate-50 border-slate-200 rounded-lg p-4 text-2xl font-black text-primary">
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex flex-col gap-1.5">
-                            <label class="text-[10px] font-bold text-rustic-accent uppercase px-1">ID do Lote</label>
-                            <input id="lote_id" class="w-full bg-background-light border-rustic-brown/20 rounded-lg h-12 px-4 focus:ring-primary focus:border-primary text-rustic-brown font-bold text-lg" placeholder="042" type="number"/>
-                        </div>
-                        <div class="flex flex-col gap-1.5">
-                            <label class="text-[10px] font-bold text-rustic-accent uppercase px-1">Comissão (%)</label>
-                            <input id="comissao" class="w-full bg-background-light border-rustic-brown/20 rounded-lg h-12 px-4 focus:ring-primary focus:border-primary text-rustic-brown font-bold text-lg" placeholder="8" type="number" step="0.1"/>
-                        </div>
-                        <div class="flex flex-col gap-1.5 col-span-2">
-                            <label class="text-[10px] font-bold text-rustic-accent uppercase px-1">Preço Total (R$)</label>
-                            <input id="preco_total" class="w-full bg-background-light border-rustic-brown/20 rounded-lg h-14 px-4 focus:ring-primary focus:border-primary text-rustic-brown font-black text-2xl" placeholder="0,00" type="number" step="0.01"/>
-                        </div>
-                        <div class="flex flex-col gap-1.5 col-span-2">
-                            <label class="text-[10px] font-bold text-rustic-accent uppercase px-1">Comprador</label>
-                            <div class="relative">
-                                <input id="comprador" class="w-full bg-background-light border-rustic-brown/20 rounded-lg h-12 pl-10 pr-4 focus:ring-primary focus:border-primary text-rustic-brown font-medium" placeholder="Buscar comprador..." type="text"/>
-                                <span class="material-symbols-outlined absolute left-3 top-3 text-rustic-accent text-sm">search</span>
-                            </div>
-                        </div>
+                    <div class="flex flex-col gap-1 col-span-2">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Comprador / Cliente</label>
+                        <input id="comprador_id" type="text" placeholder="Buscar cliente..." class="w-full bg-slate-50 border-slate-200 rounded-lg p-3 font-medium">
                     </div>
                 </div>
             </section>
 
-            <!-- Lista de Arremates -->
-            <section class="px-4 mb-4">
-                <div class="flex items-center justify-between mb-3 px-1">
-                    <h3 class="text-rustic-brown text-sm font-black uppercase tracking-widest">Últimos Arremates</h3>
-                    <button class="text-xs text-rustic-accent font-bold hover:underline">Ver Todos</button>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <div class="flex items-center justify-between bg-white p-3 rounded-lg border border-rustic-brown/5 shadow-sm">
-                        <div class="flex items-center gap-3">
-                            <div class="size-10 rounded bg-background-light flex items-center justify-center border border-rustic-brown/10">
-                                <span class="text-xs font-black text-rustic-brown">#041</span>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-rustic-brown">Haras São José</p>
-                                <p class="text-[10px] text-rustic-accent font-medium">38 Animais  Brangus</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-sm font-black text-rustic-brown">R$ 142.000</p>
-                            <p class="text-[10px] text-primary font-bold">VENDIDO</p>
-                        </div>
+            <!-- Lista Simples de Últimos Lotes -->
+            <div class="space-y-3">
+                <h4 class="text-xs font-bold text-slate-400 uppercase px-1">Últimos Arremates</h4>
+                <div class="bg-white p-4 rounded-xl border border-primary/5 flex justify-between items-center">
+                    <div>
+                        <p class="font-bold text-sm">Lote #041</p>
+                        <p class="text-xs text-slate-500">Haras São José</p>
                     </div>
+                    <p class="font-black text-primary">R$ 142.000</p>
                 </div>
-            </section>
-        </main>
+            </div>
+        </div>
 
-        <!-- Fixed Bottom Bar -->
-        <div class="fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-rustic-brown/10 z-50 max-w-[430px] mx-auto">
-            <button id="btn_confirmar" class="w-full h-16 bg-primary hover:bg-primary/90 text-white rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-3 active:scale-[0.98] transition-transform">
-                <span class="material-symbols-outlined text-3xl">check_circle</span>
-                <span class="text-xl font-black uppercase tracking-tighter">Confirmar Venda</span>
+        <!-- BARRA FIXA INFERIOR (Mobile) -->
+        <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-primary/10 z-50">
+            <!-- Navegação Rápida -->
+            <div class="flex justify-around items-center h-14 border-b border-slate-50">
+                <button class="text-primary flex flex-col items-center"><span class="material-symbols-outlined">dashboard</span><span class="text-[9px] font-bold">Painel</span></button>
+                <button class="text-slate-400 flex flex-col items-center"><span class="material-symbols-outlined">gavel</span><span class="text-[9px]">Leilões</span></button>
+                <button class="text-slate-400 flex flex-col items-center"><span class="material-symbols-outlined">person</span><span class="text-[9px]">Conta</span></button>
+            </div>
+            <!-- Botão de Ação -->
+            <div class="p-3">
+                <button id="btn_confirmar" class="w-full h-14 bg-primary text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-transform uppercase tracking-wider">
+                    <span class="material-symbols-outlined">check_circle</span> Confirmar Venda
+                </button>
+            </div>
+        </div>
+
+        <!-- BOTÃO DE AÇÃO (Apenas Desktop) -->
+        <div class="hidden lg:block absolute bottom-8 right-8">
+            <button id="btn_confirmar_desktop" class="px-8 h-16 bg-primary text-white rounded-2xl font-bold flex items-center gap-3 shadow-xl hover:bg-primary/90 transition-all">
+                <span class="material-symbols-outlined">check_circle</span> CONFIRMAR VENDA NO SISTEMA
             </button>
         </div>
-    </div>
+
+    </main>
+</div>
+
+<!-- SCRIPTS FIREBASE -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyC5aXTHrFD5Vw-AyeDhmj85VwN2vmlsLk4",
+        authDomain: "indiana-dd5bf.firebaseapp.com",
+        projectId: "indiana-dd5bf",
+        storageBucket: "indiana-dd5bf.firebasestorage.app",
+        messagingSenderId: "1066097977043",
+        appId: "1:1066097977043:web:c77f739077af6b75b1626",
+        measurementId: "G-F7KGKH3T6X"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // FUNÇÃO REGISTRAR VENDA
+    async function registrarVenda() {
+        try {
+            const loteVal = document.getElementById('lote_id').value;
+            const comissaoVal = document.getElementById('comissao_id').value;
+            const valorVal = document.getElementById('valor_total_id').value;
+            const compradorVal = document.getElementById('comprador_id').value;
+
+            if (!loteVal || !valorVal) {
+                alert("Erro: Preencha o Nº do Lote e o Valor do Arremate.");
+                return;
+            }
+
+            console.log("Iniciando salvamento no Firestore...");
+
+            const docRef = await addDoc(collection(db, "vendas"), {
+                lote: loteVal,
+                comissao: comissaoVal || "0",
+                valorTotal: Number(valorVal),
+                comprador: compradorVal || "Não informado",
+                dataVenda: serverTimestamp(),
+                status: "Vendido"
+            });
+
+            alert("SUCESSO! Lote #" + loteVal + " registrado no sistema Indiana.");
+            
+            // Limpa os campos
+            document.getElementById('lote_id').value = "";
+            document.getElementById('valor_total_id').value = "";
+            document.getElementById('comprador_id').value = "";
+
+        } catch (error) {
+            console.error("Erro Firebase:", error);
+            alert("Erro ao salvar: " + error.message);
+        }
+    }
+
+    // Atribui a função aos botões (Mobile e Desktop)
+    document.getElementById('btn_confirmar').onclick = registrarVenda;
+    if(document.getElementById('btn_confirmar_desktop')) {
+        document.getElementById('btn_confirmar_desktop').onclick = registrarVenda;
+    }
+</script>
 
 </body>
-</html>
+</html>        
